@@ -1,0 +1,94 @@
+.wrap { display: grid; grid-template-columns: 300px 1fr; gap: 24px; height: calc(100vh - 160px); }
+@media(max-width:900px){ .wrap { grid-template-columns: 1fr; height: auto; } }
+
+/* Sidebar */
+.sidebar { padding: 24px; display: flex; flex-direction: column; gap: 16px; overflow-y: auto; }
+.sideTitle { font-size: 14px; font-weight: 600; color: var(--text-secondary); }
+.progressWrap { display: flex; flex-direction: column; gap: 6px; }
+.progressLabel { font-size: 12px; color: var(--text-muted); text-align: right; }
+
+.skillTracker { display: flex; flex-direction: column; gap: 6px; flex: 1; overflow-y: auto; }
+.trackerItem {
+  display: flex; align-items: center; gap: 12px;
+  padding: 8px 10px; border-radius: 10px;
+  transition: background 0.2s;
+}
+.trackerCurrent { background: rgba(108,99,255,0.08); }
+.trackerDot {
+  width: 28px; height: 28px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 700;
+  background: rgba(255,255,255,0.05); border: 1.5px solid var(--border);
+  color: var(--text-muted); flex-shrink: 0;
+  transition: all 0.3s;
+}
+.trackerActive { border-color: var(--accent); color: var(--accent); background: rgba(108,99,255,0.1); }
+.trackerDone   { background: var(--success); border-color: var(--success); color: #fff; }
+.trackerInfo   { display: flex; flex-direction: column; gap: 2px; }
+.trackerName   { font-size: 13px; font-weight: 500; }
+.trackerLevel  { font-size: 11px; font-weight: 600; }
+
+/* Chat area */
+.chatWrap {
+  display: flex; flex-direction: column;
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: var(--radius); overflow: hidden;
+}
+.chatHeader {
+  display: flex; align-items: center; gap: 12px;
+  padding: 18px 24px; border-bottom: 1px solid var(--border);
+  background: rgba(255,255,255,0.02);
+}
+.aiAvatar { font-size: 1.8rem; }
+.chatHeader h3 { font-size: 15px; font-weight: 600; }
+
+/* Messages */
+.messages { flex: 1; overflow-y: auto; padding: 24px; display: flex; flex-direction: column; gap: 16px; }
+.startPrompt {
+  display: flex; flex-direction: column; align-items: center;
+  text-align: center; padding: 60px 40px; gap: 12px; margin: auto;
+}
+.startIcon { font-size: 3rem; }
+.startPrompt h3 { font-size: 1.3rem; }
+.startPrompt p { color: var(--text-secondary); font-size: 14px; max-width: 400px; line-height: 1.7; }
+
+.msg { display: flex; align-items: flex-start; gap: 10px; animation: fadeUp 0.3s ease; }
+.msgUser { flex-direction: row-reverse; }
+.msgAvatar { font-size: 1.4rem; flex-shrink: 0; margin-top: 4px; }
+.msgBubble {
+  max-width: 75%; padding: 14px 18px; border-radius: 18px;
+  font-size: 14px; line-height: 1.7; white-space: pre-wrap;
+}
+.msgAI .msgBubble {
+  background: rgba(255,255,255,0.06); border: 1px solid var(--border);
+  border-bottom-left-radius: 4px;
+}
+.msgUser .msgBubble {
+  background: var(--accent); color: #fff;
+  border-bottom-right-radius: 4px;
+}
+.msgError .msgBubble {
+  background: rgba(255,107,107,0.1); border: 1px solid rgba(255,107,107,0.3);
+  color: var(--danger);
+}
+
+/* Typing indicator */
+.typingIndicator {
+  display: flex; align-items: center; gap: 4px;
+  padding: 14px 18px; background: rgba(255,255,255,0.06);
+  border-radius: 18px; border-bottom-left-radius: 4px;
+  border: 1px solid var(--border);
+}
+.typingIndicator span {
+  width: 7px; height: 7px; border-radius: 50%; background: var(--text-muted);
+}
+.typingIndicator span:nth-child(1) { animation: blink 1.2s 0.0s infinite; }
+.typingIndicator span:nth-child(2) { animation: blink 1.2s 0.2s infinite; }
+.typingIndicator span:nth-child(3) { animation: blink 1.2s 0.4s infinite; }
+
+/* Input row */
+.inputRow {
+  display: flex; gap: 10px; padding: 16px 20px;
+  border-top: 1px solid var(--border); background: rgba(255,255,255,0.02);
+  align-items: flex-end;
+}

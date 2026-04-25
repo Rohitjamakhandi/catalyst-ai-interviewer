@@ -1,0 +1,126 @@
+.wrap { max-width: 1100px; margin: 0 auto; animation: fadeUp 0.5s ease; }
+
+/* Header */
+.header {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  gap: 32px; margin-bottom: 24px; flex-wrap: wrap;
+}
+.headerBadge { display: flex; gap: 8px; margin-bottom: 12px; }
+.header h1 { font-size: 1.9rem; margin-bottom: 12px; }
+.summary { color: var(--text-secondary); font-size: 14px; line-height: 1.75; max-width: 600px; }
+
+/* Readiness card */
+.readinessCard {
+  padding: 24px; display: flex; flex-direction: column; align-items: center;
+  gap: 12px; min-width: 180px; flex-shrink: 0;
+}
+.readinessCircle { position: relative; display: inline-flex; align-items: center; justify-content: center; }
+.readinessNum { position: absolute; font-size: 1.2rem; font-weight: 700; font-family: 'Space Grotesk',sans-serif; }
+.readinessLabel { font-size: 12px; color: var(--text-secondary); }
+.strengths { display: flex; flex-direction: column; gap: 6px; width: 100%; margin-top: 8px; }
+
+/* Motivational note */
+.motNote {
+  display: flex; align-items: flex-start; gap: 14px;
+  padding: 18px 22px; margin-bottom: 24px;
+  background: rgba(0,212,170,0.05) !important; border-color: rgba(0,212,170,0.2) !important;
+}
+.motNote span { font-size: 1.4rem; flex-shrink: 0; }
+.motNote p { font-size: 14px; color: var(--text-secondary); line-height: 1.7; font-style: italic; }
+
+/* Tabs */
+.tabs { display: flex; gap: 4px; margin-bottom: 28px; padding: 4px;
+  background: rgba(255,255,255,0.03); border-radius: var(--radius-sm);
+  border: 1px solid var(--border); width: fit-content; }
+.tab {
+  padding: 10px 20px; border-radius: 8px; border: none; cursor: pointer;
+  background: transparent; color: var(--text-muted);
+  font-family: 'Inter',sans-serif; font-size: 13px; font-weight: 500;
+  transition: all 0.2s; white-space: nowrap;
+}
+.tabActive { background: var(--accent); color: #fff; }
+
+/* Roadmap */
+.roadmap { display: flex; flex-direction: column; gap: 16px; }
+.allGood { padding: 60px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+.allGood h3 { font-size: 1.4rem; }
+.allGood p  { color: var(--text-secondary); }
+
+/* Gap card */
+.gapCard { overflow: hidden; animation: fadeUp 0.4s ease both; }
+.gapCardHeader {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 20px 24px; cursor: pointer; transition: background 0.2s;
+}
+.gapCardHeader:hover { background: rgba(255,255,255,0.02); }
+.gapCardLeft { display: flex; align-items: center; gap: 16px; }
+.gapNum {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: var(--grad-1); display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: 14px; flex-shrink: 0;
+}
+.gapCardLeft h3 { font-size: 15px; margin-bottom: 4px; }
+.gapCardLeft p  { font-size: 12px; }
+.gapCardRight { display: flex; align-items: center; gap: 12px; }
+.chevron { font-size: 1.4rem; color: var(--text-muted); transition: transform 0.3s; display: inline-block; }
+.chevronOpen { transform: rotate(90deg); }
+
+/* Gap card body */
+.gapCardBody { padding: 0 24px 24px; border-top: 1px solid var(--border); padding-top: 20px; }
+.gapCardBody h4 { font-size: 13px; font-weight: 600; color: var(--text-secondary); margin-bottom: 12px; }
+
+/* Resources */
+.resources { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
+.resourceCard {
+  display: flex; align-items: center; gap: 14px;
+  padding: 14px 16px; border-radius: 12px;
+  background: rgba(255,255,255,0.03); border: 1px solid var(--border);
+  text-decoration: none; transition: all 0.2s;
+}
+.resourceCard:hover { border-color: var(--accent); background: rgba(108,99,255,0.06); }
+.resourceIcon { font-size: 1.4rem; flex-shrink: 0; }
+.resourceInfo { flex: 1; display: flex; flex-direction: column; gap: 3px; }
+.resourceTitle { font-size: 13px; font-weight: 600; color: var(--text-primary); }
+.resourceMeta  { font-size: 11px; color: var(--text-muted); display: flex; align-items: center; gap: 8px; }
+.freeBadge { background: rgba(0,212,170,0.15); color: var(--success); border: 1px solid rgba(0,212,170,0.3); padding: 1px 6px; border-radius: 4px; font-size: 10px; font-weight: 700; }
+.resourceArrow { color: var(--text-muted); font-size: 1rem; }
+
+/* Practice project */
+.practiceProject {
+  padding: 16px; border-radius: 12px; margin-bottom: 16px;
+  background: rgba(255,179,71,0.05); border: 1px solid rgba(255,179,71,0.2);
+}
+.practiceProject p { font-size: 13px; color: var(--text-secondary); line-height: 1.6; }
+
+/* Adjacent skills */
+.adjacentSkills { margin-bottom: 8px; }
+.chipRow { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+
+/* Timeline */
+.timeline { display: flex; flex-direction: column; gap: 12px; }
+.weekCard { padding: 22px 28px; display: flex; gap: 20px; align-items: flex-start; animation: fadeUp 0.4s ease both; }
+.weekBadge {
+  padding: 6px 14px; border-radius: 20px; white-space: nowrap;
+  background: var(--grad-1); font-size: 12px; font-weight: 700; flex-shrink: 0;
+}
+.weekContent { flex: 1; }
+.weekContent h3 { font-size: 14px; font-weight: 600; margin-bottom: 8px; }
+.weekGoals { list-style: none; display: flex; flex-direction: column; gap: 5px; padding: 0; }
+.weekGoals li { font-size: 13px; color: var(--text-secondary); padding-left: 16px; position: relative; }
+.weekGoals li::before { content: '→'; position: absolute; left: 0; color: var(--accent); }
+
+/* Export */
+.exportTab { padding: 48px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 16px; }
+.exportIcon { font-size: 3rem; }
+.exportTab h3 { font-size: 1.4rem; }
+.exportTab p  { color: var(--text-secondary); font-size: 14px; }
+.exportActions { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; margin-top: 8px; }
+.exportPreview {
+  width: 100%; max-height: 300px; overflow: auto;
+  background: rgba(255,255,255,0.03); border: 1px solid var(--border);
+  border-radius: var(--radius-sm); padding: 20px; text-align: left; margin-top: 16px;
+}
+.exportPreview pre { font-size: 12px; color: var(--text-secondary); white-space: pre-wrap; font-family: monospace; }
+
+/* Footer */
+.footer { display: flex; justify-content: center; gap: 12px; margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--border); }

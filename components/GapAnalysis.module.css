@@ -1,0 +1,51 @@
+.wrap { max-width: 1100px; margin: 0 auto; animation: fadeUp 0.5s ease; }
+.header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 32px; gap: 24px; flex-wrap: wrap; }
+.header h1 { font-size: 1.9rem; margin-bottom: 8px; }
+.header p  { color: var(--text-secondary); font-size: 14px; }
+
+/* Readiness ring */
+.readinessBadge { display: flex; flex-direction: column; align-items: center; gap: 8px; flex-shrink: 0; }
+.readinessRing {
+  width: 80px; height: 80px; border-radius: 50%;
+  background: conic-gradient(var(--accent) 0%, var(--accent) var(--pct), rgba(255,255,255,0.06) var(--pct));
+  display: flex; align-items: center; justify-content: center;
+  position: relative;
+}
+.readinessRing::before {
+  content: ''; position: absolute;
+  width: 64px; height: 64px; border-radius: 50%;
+  background: var(--bg-primary);
+}
+.readinessNum { position: relative; z-index: 1; font-size: 1.1rem; font-weight: 700; font-family: 'Space Grotesk', sans-serif; }
+
+/* Summary */
+.summaryCards { display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; margin-bottom: 28px; }
+@media(max-width:768px){ .summaryCards { grid-template-columns: repeat(2,1fr); } }
+.sCard { padding: 18px 22px; display: flex; flex-direction: column; gap: 4px; }
+.sNum  { font-size: 2rem; font-weight: 700; font-family: 'Space Grotesk',sans-serif; }
+.sLabel{ font-size: 12px; color: var(--text-secondary); }
+
+/* Grid */
+.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 32px; }
+@media(max-width:900px){ .grid { grid-template-columns: 1fr; } }
+
+.chartCard { padding: 28px; }
+.chartCard h3 { font-size: 1rem; margin-bottom: 4px; }
+.chartCard p  { font-size: 12px; color: var(--text-muted); margin-bottom: 16px; }
+.radarWrap { width: 100%; }
+.legend { display: flex; gap: 20px; margin-top: 12px; font-size: 12px; color: var(--text-secondary); align-items: center; }
+
+/* Gap list */
+.gapList { padding: 28px; overflow-y: auto; }
+.gapList h3 { font-size: 1rem; margin-bottom: 4px; }
+.gapList p  { font-size: 12px; color: var(--text-muted); margin-bottom: 20px; }
+.gapItems { display: flex; flex-direction: column; gap: 14px; }
+.gapItem  { padding: 14px; border-radius: 12px; background: rgba(255,255,255,0.02); border: 1px solid var(--border); }
+.gapTop   { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+.gapName  { font-size: 13px; font-weight: 600; }
+.gapBar   { display: flex; flex-direction: column; gap: 4px; }
+.gapBarTrack { height: 5px; border-radius: 3px; background: rgba(255,255,255,0.06); overflow: hidden; }
+.gapBarFill  { height: 100%; border-radius: 3px; transition: width 1s ease; }
+.gapLevels { display: flex; justify-content: space-between; margin-top: 6px; font-size: 11px; color: var(--text-muted); }
+
+.actions { display: flex; flex-direction: column; align-items: center; gap: 4px; }

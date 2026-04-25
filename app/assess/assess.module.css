@@ -1,0 +1,60 @@
+.page { min-height: 100vh; position: relative; overflow-x: hidden; }
+
+.orb1, .orb2 {
+  position: fixed; border-radius: 50%; filter: blur(100px); pointer-events: none; z-index: 0;
+}
+.orb1 {
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(108,99,255,0.12) 0%, transparent 70%);
+  top: -100px; right: -100px;
+}
+.orb2 {
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(0,212,170,0.08) 0%, transparent 70%);
+  bottom: 0; left: -100px;
+}
+
+.header {
+  position: sticky; top: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 18px 48px;
+  background: rgba(8,11,18,0.85); backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  flex-wrap: wrap; gap: 16px;
+}
+.logo { display: flex; align-items: center; gap: 8px; text-decoration: none; font-size: 1.1rem; }
+
+/* Stepper */
+.stepper { display: flex; align-items: center; gap: 0; }
+.stepWrap { display: flex; align-items: center; gap: 0; }
+.step {
+  width: 32px; height: 32px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 700;
+  background: rgba(255,255,255,0.05); border: 1.5px solid var(--border);
+  color: var(--text-muted); transition: all 0.3s ease;
+}
+.stepActive { background: var(--accent); border-color: var(--accent); color: #fff; box-shadow: 0 0 16px var(--accent-glow); }
+.stepDone { background: var(--success); border-color: var(--success); color: #fff; }
+.stepLabel { font-size: 11px; color: var(--text-muted); margin: 0 6px; white-space: nowrap; }
+.stepLabelActive { color: var(--accent); }
+.stepLine { width: 32px; height: 1.5px; background: var(--border); }
+.stepLineDone { background: var(--success); }
+
+.main { position: relative; z-index: 1; padding: 40px 48px; max-width: 1300px; margin: 0 auto; }
+
+.errorBanner {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 20px; border-radius: var(--radius-sm);
+  background: rgba(255,107,107,0.1); border: 1px solid rgba(255,107,107,0.3);
+  color: var(--danger); margin-bottom: 24px; font-size: 14px;
+}
+.errorBanner button {
+  background: none; border: none; color: var(--danger); cursor: pointer; font-size: 16px;
+}
+
+@media (max-width: 768px) {
+  .header { padding: 16px 20px; }
+  .main   { padding: 24px 20px; }
+  .stepLabel { display: none; }
+}
