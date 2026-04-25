@@ -1,36 +1,75 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Catalyst AI - Skill Assessment & Personalized Learning Plan
 
-## Getting Started
+Catalyst AI is an intelligent, full-stack web application designed to evaluate a candidate's actual proficiency in required job skills using a conversational AI interviewer. After the interview, it provides a comprehensive gap analysis and generates a personalized learning roadmap.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## ⚡ Technology Stack
+
+### Core Architecture
+*   **Framework:** Next.js 14 (App Router)
+*   **UI Library:** React 19
+*   **Runtime:** Node.js
+
+### Artificial Intelligence
+*   **AI Engine:** Google Generative AI (`@google/generative-ai`)
+*   **Models Used:** `gemini-flash-latest` (fast, free-tier fallback), `gemini-pro-latest` (high accuracy).
+
+### Frontend & Design
+*   **Styling:** CSS Modules (`*.module.css`) and global CSS variables for dynamic theming.
+*   **Aesthetics:** Custom Glassmorphism UI, Dark Mode optimized, dynamic micro-animations.
+*   **Data Visualization:** Recharts (Radar charts for Skill Gap Analysis).
+
+### Utilities
+*   **Document Parsing:** `pdf-parse` (Server-side extraction of text from Resume PDFs).
+
+---
+
+## 📁 Folder Structure
+
+```text
+catalyst-app/
+├── app/                        # Next.js 14 App Router Directory
+│   ├── api/                    # Secure Server-Side Backend Routes
+│   │   ├── chat/               # Handles the conversational AI interview
+│   │   ├── learning-plan/      # Generates the personalized 8-week roadmap
+│   │   └── parse-documents/    # Extracts text from PDFs and maps skills
+│   ├── assess/                 # Main Dashboard page layout
+│   ├── globals.css             # Core design system (colors, glassmorphism)
+│   ├── layout.js               # Global HTML structure
+│   └── page.js                 # Landing page
+├── components/                 # Reusable React UI Components
+│   ├── ChatInterface.js        # The AI Interviewer conversational UI
+│   ├── GapAnalysis.js          # Renders the Recharts Radar graph
+│   ├── LearningPlan.js         # The interactive 8-week learning roadmap
+│   ├── SkillMatrix.js          # Displays the initial Surface Match analysis
+│   └── UploadPanel.js          # Drag-and-drop file uploader for JD and Resume
+├── lib/                        # Shared Utilities and Configurations
+│   ├── gemini.js               # Centralized Google AI SDK setup & Prompts
+│   └── skillParser.js          # Logic to extract 'SKILL_ASSESSED' tags from chat
+├── public/                     # Static assets (images, icons, sample resumes)
+├── .env.local                  # Environment variables (GEMINI_API_KEY)
+└── next.config.mjs             # Next.js configuration (Body size limits)
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## 🚀 How to Run Locally
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. **Install Dependencies:**
+   ```bash
+   npm install
+   ```
 
-## Learn More
+2. **Set up Environment Variables:**
+   Make sure you have a `.env.local` file in the root directory with your Google AI Studio API Key:
+   ```env
+   GEMINI_API_KEY=your_google_api_key_here
+   ```
 
-To learn more about Next.js, take a look at the following resources:
+3. **Start the Development Server:**
+   ```bash
+   npm run dev
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+4. Open [http://localhost:3000](http://localhost:3000) in your browser.

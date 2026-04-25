@@ -58,3 +58,28 @@
   .main   { padding: 24px 20px; }
   .stepLabel { display: none; }
 }
+
+/* Layout for Phase 2: Chat + Avatar */
+.interviewLayout {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 24px;
+  height: 100%;
+  align-items: stretch;
+}
+
+@media (max-width: 900px) {
+  .interviewLayout {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+  }
+}
+
+.chatArea {
+  min-height: 500px;
+}
+
+.avatarArea {
+  position: sticky;
+  top: 24px;
+}

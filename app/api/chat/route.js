@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getModel, ASSESSMENT_SYSTEM_PROMPT } from '@/lib/gemini';
+import { openai, DEFAULT_MODEL, ASSESSMENT_SYSTEM_PROMPT } from '@/lib/gemini';
 
 export const runtime = 'nodejs';
 
@@ -7,27 +7,23 @@ export async function POST(req) {
   try {
     const { messages, skillsContext } = await req.json();
 
-    const model = getModel();
+    const systemPrompt = `${ASSESSMENT_SYSTEM_PROMPT}\n\nCANDIDATE CONTEXT:\n${skillsContext}`;
 
-    const systemPrompt = `${ASSESSMENT_SYSTEM_PROMPT}
+    const openAIMessages = [
+      { role: 'system', content: systemPrompt },
+      ...messages.map(m => ({
+        role: m.role === 'user' ? 'user' : 'assistant',
+        content: m.content
+      }))
+    ];
 
-CANDIDATE CONTEXT:
-${skillsContext}`;
-
-    const chat = model.startChat({
-      history: [
-        { role: 'user', parts: [{ text: systemPrompt }] },
-        { role: 'model', parts: [{ text: 'Understood. I am ready to begin the skill assessment. I will ask scenario-based questions, evaluate answers carefully, and assign proficiency levels.' }] },
-        ...messages.slice(0, -1).map(m => ({
-          role: m.role === 'user' ? 'user' : 'model',
-          parts: [{ text: m.content }],
-        })),
-      ],
+    const response = await openai.chat.completions.create({
+      model: DEFAULT_MODEL,
+      messages: openAIMessages,
+      temperature: 0.2
     });
 
-    const lastUserMessage = messages[messages.length - 1];
-    const result = await chat.sendMessage(lastUserMessage.content);
-    const text = result.response.text();
+    const text = response.choices[0].message.content;
 
     return NextResponse.json({ success: true, message: text });
   } catch (err) {

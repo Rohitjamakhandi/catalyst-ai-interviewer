@@ -1,13 +1,11 @@
 import { NextResponse } from 'next/server';
-import { getModel, LEARNING_PLAN_PROMPT } from '@/lib/gemini';
+import { openai, DEFAULT_MODEL, LEARNING_PLAN_PROMPT } from '@/lib/gemini';
 
 export const runtime = 'nodejs';
 
 export async function POST(req) {
   try {
     const { assessedSkills, requiredSkills, jobTitle, candidateName, readiness } = await req.json();
-
-    const model = getModel();
 
     const prompt = `${LEARNING_PLAN_PROMPT}
 
@@ -21,8 +19,13 @@ ${requiredSkills.map(r => {
   return `- ${r.name} (Required: ${r.requiredLevel}, Importance: ${r.importance}, Assessed: ${assessed ? assessed.level : 'Not assessed'})`;
 }).join('\n')}`;
 
-    const result = await model.generateContent(prompt);
-    const text = result.response.text().trim();
+    const response = await openai.chat.completions.create({
+      model: DEFAULT_MODEL,
+      messages: [{ role: 'user', content: prompt }],
+      temperature: 0.1,
+      response_format: { type: 'json_object' }
+    });
+    const text = response.choices[0].message.content.trim();
     const jsonStr = text.replace(/^```json\s*/i, '').replace(/^```\s*/i, '').replace(/```\s*$/i, '').trim();
     const data = JSON.parse(jsonStr);
 

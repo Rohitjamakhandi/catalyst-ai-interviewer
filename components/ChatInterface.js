@@ -3,7 +3,7 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import { parseSkillAssessed, isAssessmentComplete } from '@/lib/skillParser';
 import styles from './ChatInterface.module.css';
 
-export default function ChatInterface({ parsedData, onComplete }) {
+export default function ChatInterface({ parsedData, onComplete, onAiMessage }) {
   const { requiredSkills = [], jobTitle, candidateName, candidateExperience } = parsedData;
 
   const [messages, setMessages]       = useState([]);
@@ -15,6 +15,54 @@ export default function ChatInterface({ parsedData, onComplete }) {
   const [started, setStarted]         = useState(false);
   const bottomRef = useRef(null);
   const inputRef  = useRef(null);
+  const [isListening, setIsListening] = useState(false);
+  const recognitionRef = useRef(null);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined' && ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window)) {
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      const recognition = new SpeechRecognition();
+      recognition.continuous = true;
+      recognition.interimResults = true;
+      recognition.lang = 'en-US';
+
+      recognition.onresult = (event) => {
+        let interimTranscript = '';
+        let finalTranscript = '';
+        for (let i = event.resultIndex; i < event.results.length; ++i) {
+          if (event.results[i].isFinal) {
+            finalTranscript += event.results[i][0].transcript;
+          } else {
+            interimTranscript += event.results[i][0].transcript;
+          }
+        }
+        if (finalTranscript) {
+          setInput((prev) => prev + (prev ? ' ' : '') + finalTranscript);
+        }
+      };
+
+      recognition.onerror = (event) => {
+        console.error('Speech recognition error', event.error);
+        setIsListening(false);
+      };
+
+      recognition.onend = () => {
+        setIsListening(false);
+      };
+
+      recognitionRef.current = recognition;
+    }
+  }, []);
+
+  const toggleListening = () => {
+    if (isListening) {
+      recognitionRef.current?.stop();
+      setIsListening(false);
+    } else {
+      recognitionRef.current?.start();
+      setIsListening(true);
+    }
+  };
 
   const skillsContext = `
 Job: ${jobTitle}
@@ -39,6 +87,10 @@ Skills to assess (in order): ${requiredSkills.map(s => `${s.name} (Required: ${s
       const aiText = json.message;
       const aiMsg  = { role: 'assistant', content: aiText, ts: Date.now() };
       setMessages(prev => [...prev, aiMsg]);
+      
+      if (onAiMessage) {
+        onAiMessage(aiText);
+      }
 
       // Parse skill assessed tag
       const result = parseSkillAssessed(aiText);
@@ -184,12 +236,21 @@ Skills to assess (in order): ${requiredSkills.map(s => `${s.name} (Required: ${s
               id="chat-input"
               className="input"
               style={{resize:'none',minHeight:'52px',maxHeight:'140px',lineHeight:'1.6'}}
-              placeholder="Type your answer… (Enter to send, Shift+Enter for new line)"
+              placeholder={isListening ? "Listening... Speak now." : "Type your answer… (Enter to send, Shift+Enter for new line)"}
               value={input}
               onChange={e => setInput(e.target.value)}
               onKeyDown={handleKey}
               disabled={loading}
             />
+            <button
+              className={`btn ${isListening ? 'btn-danger' : 'btn-secondary'}`}
+              style={{height:'52px',padding:'0 16px',flexShrink:0, display:'flex', alignItems:'center', justifyContent:'center'}}
+              onClick={toggleListening}
+              disabled={loading || !recognitionRef.current}
+              title="Speak your answer"
+            >
+              {isListening ? '🛑' : '🎤'}
+            </button>
             <button
               id="send-btn"
               className="btn btn-primary"

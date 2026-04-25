@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getModel, SKILL_EXTRACTION_PROMPT } from '@/lib/gemini';
+import { openai, DEFAULT_MODEL, SKILL_EXTRACTION_PROMPT } from '@/lib/gemini';
 
 export const runtime = 'nodejs';
 
@@ -30,7 +30,6 @@ export async function POST(req) {
       return NextResponse.json({ error: 'Both Job Description and Resume are required.' }, { status: 400 });
     }
 
-    const model = getModel();
     const prompt = `${SKILL_EXTRACTION_PROMPT}
 
 --- JOB DESCRIPTION ---
@@ -39,12 +38,31 @@ ${jdText}
 --- RESUME ---
 ${resumeContent}`;
 
-    const result = await model.generateContent(prompt);
-    const text = result.response.text().trim();
+    const response = await openai.chat.completions.create({
+      model: DEFAULT_MODEL,
+      messages: [{ role: 'user', content: prompt }],
+      temperature: 0.1,
+      response_format: { type: 'json_object' }
+    });
+    const text = response.choices[0].message.content.trim();
 
     // Strip markdown code fences if present
     const jsonStr = text.replace(/^```json\s*/i, '').replace(/^```\s*/i, '').replace(/```\s*$/i, '').trim();
     const data = JSON.parse(jsonStr);
+
+    // ── Safety net: if AI returned garbage/instruction text as candidateName, extract from resume directly
+    const isGarbageName = !data.candidateName
+      || data.candidateName.length > 60
+      || /extract|candidate|full name|resume|instruction|return|person/i.test(data.candidateName);
+
+    if (isGarbageName) {
+      // Try to extract name from the first 3 lines of the resume (usually the header)
+      const firstLines = resumeContent.split('\n').slice(0, 5).join(' ').trim();
+      // Match a capitalized full name pattern (e.g. "Rohit Jamakhandi" or "ROHIT JAMAKHANDI")
+      const nameMatch = firstLines.match(/^([A-Z][a-zA-Z]+(?:\s[A-Z][a-zA-Z]+)+)/m)
+        || firstLines.match(/([A-Z]{2,}\s+[A-Z]{2,})/);
+      data.candidateName = nameMatch ? nameMatch[1].split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(' ') : null;
+    }
 
     return NextResponse.json({ success: true, data, resumeText: resumeContent });
   } catch (err) {

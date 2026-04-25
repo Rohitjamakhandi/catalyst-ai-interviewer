@@ -5,6 +5,7 @@ import SkillMatrix from '@/components/SkillMatrix';
 import ChatInterface from '@/components/ChatInterface';
 import GapAnalysis from '@/components/GapAnalysis';
 import LearningPlan from '@/components/LearningPlan';
+import InterviewAvatar from '@/components/InterviewAvatar';
 import styles from './assess.module.css';
 
 const PHASES = ['Upload', 'Skills', 'Assess', 'Gaps', 'Plan'];
@@ -16,6 +17,7 @@ export default function AssessPage() {
   const [learningPlan, setLearningPlan]     = useState(null);
   const [loading, setLoading]       = useState(false);
   const [error, setError]           = useState('');
+  const [latestAiMessage, setLatestAiMessage] = useState('');
 
   const handleDocumentsParsed = useCallback((data) => {
     setParsedData(data);
@@ -98,10 +100,18 @@ export default function AssessPage() {
           <SkillMatrix data={parsedData} onStart={handleStartAssessment} />
         )}
         {phase === 2 && parsedData && (
-          <ChatInterface
-            parsedData={parsedData}
-            onComplete={handleAssessmentComplete}
-          />
+          <div className={styles.interviewLayout}>
+            <div className={styles.chatArea}>
+              <ChatInterface
+                parsedData={parsedData}
+                onComplete={handleAssessmentComplete}
+                onAiMessage={setLatestAiMessage}
+              />
+            </div>
+            <div className={styles.avatarArea}>
+              <InterviewAvatar latestMessage={latestAiMessage} />
+            </div>
+          </div>
         )}
         {phase === 3 && (
           <GapAnalysis

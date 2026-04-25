@@ -1,0 +1,70 @@
+.avatarContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.avatarWrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: var(--radius-md);
+  margin-bottom: 20px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.avatarImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: all 0.3s ease;
+  z-index: 2;
+  position: relative;
+}
+
+.speaking .avatarImage {
+  box-shadow: 0 0 30px rgba(108, 99, 255, 0.4);
+}
+
+.info {
+  text-align: center;
+}
+
+.name {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0 0 4px 0;
+}
+
+.title {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.statusBadge {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-secondary);
+  transition: all 0.3s ease;
+}
+
+.speaking .statusBadge {
+  background: rgba(108, 99, 255, 0.15);
+  color: var(--accent);
+}

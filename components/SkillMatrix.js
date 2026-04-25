@@ -5,7 +5,24 @@ const IMPORTANCE_COLOR = { Critical: 'badge-red', Important: 'badge-yellow', 'Ni
 const LEVEL_COLOR = { Beginner: '#8b8fa8', Intermediate: '#6c63ff', Advanced: '#ffb347', Expert: '#00d4aa' };
 
 export default function SkillMatrix({ data, onStart }) {
-  const { jobTitle, company, requiredSkills = [], candidateName, candidateSkills = [], overlapSkills = [], missingSkills = [] } = data;
+  const { jobTitle, company, requiredSkills = [], candidateName, candidateSkills = [] } = data;
+
+  // Robustly calculate matches on the frontend to avoid AI string mismatches
+  const overlapSkills = [];
+  const missingSkills = [];
+
+  requiredSkills.forEach(reqSkill => {
+    const isMatch = candidateSkills.some(candSkill => 
+      candSkill.toLowerCase().includes(reqSkill.name.toLowerCase()) || 
+      reqSkill.name.toLowerCase().includes(candSkill.toLowerCase())
+    ) || (data.overlapSkills || []).some(o => o.toLowerCase() === reqSkill.name.toLowerCase());
+
+    if (isMatch) {
+      overlapSkills.push(reqSkill.name);
+    } else {
+      missingSkills.push(reqSkill.name);
+    }
+  });
 
   return (
     <div className={styles.wrap}>
