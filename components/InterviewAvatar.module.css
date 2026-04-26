@@ -2,69 +2,194 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   background: rgba(255, 255, 255, 0.02);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
-  padding: 24px;
+  padding: 16px 16px 20px;
   height: 100%;
   position: relative;
   overflow: hidden;
+  transition: border-color 0.3s, box-shadow 0.3s;
 }
 
+.avatarContainer.speaking {
+  border-color: rgba(108, 99, 255, 0.4);
+  box-shadow: 0 0 30px rgba(108, 99, 255, 0.12);
+}
+
+/* ── Half-body portrait frame: face → shoulders → chest → stomach ── */
 .avatarWrapper {
   position: relative;
+  /* Portrait aspect ratio that reveals face down to stomach */
   width: 100%;
-  aspect-ratio: 1 / 1;
+  max-width: 300px;
+  /* 3 : 4.4 ratio — tall enough to show upper body comfortably */
+  aspect-ratio: 3 / 4.4;
+  margin: 0 auto;
   border-radius: var(--radius-md);
-  margin-bottom: 20px;
   overflow: hidden;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(108, 99, 255, 0.2);
+  /* Don't grow/shrink unpredictably */
+  flex-shrink: 0;
 }
 
-.avatarImage {
+/* ── Glow rings (now follow rectangle border) ── */
+.ring {
+  position: absolute;
+  inset: -4px;
+  border-radius: calc(var(--radius-md) + 4px);
+  border: 2px solid rgba(108, 99, 255, 0.15);
+  pointer-events: none;
+  z-index: 0;
+  transition: border-color 0.3s;
+}
+.ring2 {
+  inset: -10px;
+  border-radius: calc(var(--radius-md) + 10px);
+  border-color: rgba(108, 99, 255, 0.07);
+}
+
+@keyframes ringPulse {
+  0%, 100% { border-color: rgba(108, 99, 255, 0.65); }
+  50%       { border-color: rgba(108, 99, 255, 0.1); }
+}
+@keyframes ringPulse2 {
+  0%, 100% { border-color: rgba(108, 99, 255, 0.35); }
+  50%       { border-color: rgba(108, 99, 255, 0.04); }
+}
+.ringActive        { animation: ringPulse  0.8s ease-in-out infinite; }
+.ring2.ringActive  { animation: ringPulse2 0.8s ease-in-out infinite 0.2s; }
+
+/* ── D-ID live video ── */
+.avatarVideo {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
+  /*
+    Now that D-ID uses stitch: true, we can safely use cover.
+    This fills the portrait frame nicely without black bars,
+    while keeping the face/body layout exactly like the photo.
+  */
   object-fit: cover;
-  transition: all 0.3s ease;
+  object-position: center 8%;
   z-index: 2;
-  position: relative;
+  background: #08080f;
+  display: block;
+  cursor: pointer;
 }
 
-.speaking .avatarImage {
-  box-shadow: 0 0 30px rgba(108, 99, 255, 0.4);
+/* ── Static photo overlay ── */
+.avatarPhoto {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  /* Match the video: cover fills the frame cleanly */
+  object-fit: cover;
+  object-position: center 8%;
+  z-index: 3;
+  transition: opacity 0.6s ease;
+  pointer-events: none;
 }
 
+.avatarPhotoHidden {
+  opacity: 0;
+}
+
+/* ── Sound wave bars ── */
+.mouthAnim {
+  position: absolute;
+  bottom: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  background: rgba(0, 0, 0, 0.55);
+  padding: 5px 10px;
+  border-radius: 20px;
+  z-index: 5;
+  pointer-events: none;
+  backdrop-filter: blur(4px);
+}
+.mouthAnim span {
+  display: block;
+  width: 4px;
+  background: linear-gradient(to top, #6c63ff, #a78bfa);
+  border-radius: 2px;
+  animation: soundBar 0.45s ease-in-out infinite alternate;
+}
+.mouthAnim span:nth-child(1) { height: 7px;  animation-delay: 0s; }
+.mouthAnim span:nth-child(2) { height: 14px; animation-delay: 0.1s; }
+.mouthAnim span:nth-child(3) { height: 20px; animation-delay: 0.2s; }
+.mouthAnim span:nth-child(4) { height: 13px; animation-delay: 0.15s; }
+.mouthAnim span:nth-child(5) { height: 7px;  animation-delay: 0.05s; }
+
+@keyframes soundBar {
+  from { transform: scaleY(0.3); opacity: 0.5; }
+  to   { transform: scaleY(1);   opacity: 1; }
+}
+
+/* ── Info section ── */
 .info {
   text-align: center;
+  margin-top: 16px;
+  flex-shrink: 0;
 }
 
 .name {
-  font-size: 18px;
-  font-weight: 600;
+  font-size: 17px;
+  font-weight: 700;
   color: var(--text-primary);
-  margin: 0 0 4px 0;
+  margin: 0 0 3px;
 }
 
 .title {
-  font-size: 13px;
+  font-size: 11px;
   color: var(--text-muted);
-  margin: 0;
+  margin: 0 0 10px;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
 }
 
 .statusBadge {
-  display: inline-block;
-  margin-top: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   padding: 4px 12px;
   border-radius: 20px;
   font-size: 11px;
   font-weight: 600;
   background: rgba(255, 255, 255, 0.05);
   color: var(--text-secondary);
-  transition: all 0.3s ease;
+  border: 1px solid var(--border);
+  transition: all 0.3s;
 }
 
-.speaking .statusBadge {
-  background: rgba(108, 99, 255, 0.15);
-  color: var(--accent);
+.statusSpeaking {
+  background: rgba(108, 99, 255, 0.12);
+  color: #a78bfa;
+  border-color: rgba(108, 99, 255, 0.35);
+}
+
+.statusDot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: #555;
+  display: inline-block;
+  transition: all 0.3s;
+}
+
+.dotSpeaking {
+  background: #6c63ff;
+  box-shadow: 0 0 6px rgba(108, 99, 255, 0.8);
+  animation: dotPulse 0.8s ease infinite alternate;
+}
+
+@keyframes dotPulse {
+  from { opacity: 1; }
+  to   { opacity: 0.3; }
 }

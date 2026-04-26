@@ -9,10 +9,7 @@ export async function POST() {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        source_url: "https://files.catbox.moe/nw2pdt.png",
-        config: {
-          stitch: true
-        }
+        source_url: "https://files.catbox.moe/nw2pdt.png"
       }),
     });
 

@@ -46,9 +46,20 @@ ${resumeContent}`;
     });
     const text = response.choices[0].message.content.trim();
 
-    // Strip markdown code fences if present
-    const jsonStr = text.replace(/^```json\s*/i, '').replace(/^```\s*/i, '').replace(/```\s*$/i, '').trim();
-    const data = JSON.parse(jsonStr);
+    // Strip markdown code fences and conversational padding
+    const jsonMatch = text.match(/\{[\s\S]*\}/);
+    const jsonStr = jsonMatch ? jsonMatch[0] : text;
+    
+    let data;
+    try {
+      data = JSON.parse(jsonStr);
+    } catch (parseError) {
+      console.error('Failed to parse AI JSON:', text);
+      return NextResponse.json({ 
+        error: 'The AI model refused to process this or returned invalid data. Please ensure your Job Description and Resume are complete and try again.',
+        details: text.slice(0, 200)
+      }, { status: 422 });
+    }
 
     // ── Safety net: if AI returned garbage/instruction text as candidateName, extract from resume directly
     const isGarbageName = !data.candidateName

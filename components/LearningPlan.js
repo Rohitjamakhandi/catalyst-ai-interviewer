@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import styles from './LearningPlan.module.css';
 
-const TYPE_ICON = { Course: '🎓', Book: '📚', Project: '🛠️', Article: '📖', Video: '🎬' };
+const TYPE_ICON = { Course: '🎓', Book: '📚', Project: '🛠️', Article: '📖', Video: '🎬', YouTube: '▶️' };
 const PRIORITY_COLOR = { Critical: 'badge-red', High: 'badge-yellow', Medium: 'badge-purple' };
 
 export default function LearningPlan({ plan, jobTitle }) {

@@ -28,11 +28,11 @@ export default function Home() {
       <nav className={styles.nav}>
         <div className={styles.navLogo}>
           <span className={styles.logoIcon}>⚡</span>
-          <span className="grad-text" style={{fontFamily:'Space Grotesk',fontWeight:700,fontSize:'1.2rem'}}>Catalyst</span>
+          <span className="grad-text" style={{ fontFamily: 'Space Grotesk', fontWeight: 700, fontSize: '1.2rem' }}>Catalyst</span>
         </div>
         <div className={styles.navLinks}>
           <span className="badge badge-purple">AI-Powered</span>
-          <span className="badge badge-green">Gemini 2.0</span>
+          <span className="badge badge-green">OpenRouter</span>
         </div>
       </nav>
 
@@ -51,10 +51,10 @@ export default function Home() {
           Our AI agent assesses real proficiency, identifies gaps, and builds your personalised learning roadmap.
         </p>
         <div className={styles.heroCtas}>
-          <button id="start-btn" className="btn btn-primary" style={{fontSize:'16px',padding:'14px 32px'}} onClick={() => router.push('/assess')}>
+          <button id="start-btn" className="btn btn-primary" style={{ fontSize: '16px', padding: '14px 32px' }} onClick={() => router.push('/assess')}>
             Start Assessment →
           </button>
-          <button className="btn btn-ghost" onClick={() => document.getElementById('features').scrollIntoView({behavior:'smooth'})}>
+          <button className="btn btn-ghost" onClick={() => document.getElementById('features').scrollIntoView({ behavior: 'smooth' })}>
             See How It Works
           </button>
         </div>
@@ -77,7 +77,7 @@ export default function Home() {
         </div>
         <div className={styles.featureGrid}>
           {features.map((f, i) => (
-            <div key={f.title} className={styles.featureCard + ' glass'} style={{animationDelay:`${i*0.1}s`}}>
+            <div key={f.title} className={styles.featureCard + ' glass'} style={{ animationDelay: `${i * 0.1}s` }}>
               <div className={styles.featureIcon}>{f.icon}</div>
               <h3>{f.title}</h3>
               <p>{f.desc}</p>
@@ -91,7 +91,7 @@ export default function Home() {
         <div className={styles.ctaInner + ' glass'}>
           <h2>Ready to find your skill gaps?</h2>
           <p>Paste your job description and resume. The AI does the rest.</p>
-          <button className="btn btn-primary" style={{fontSize:'15px',padding:'13px 28px'}} onClick={() => router.push('/assess')}>
+          <button className="btn btn-primary" style={{ fontSize: '15px', padding: '13px 28px' }} onClick={() => router.push('/assess')}>
             Start Free Assessment →
           </button>
         </div>
@@ -99,8 +99,8 @@ export default function Home() {
 
       {/* Footer */}
       <footer className={styles.footer}>
-        <span className="grad-text" style={{fontFamily:'Space Grotesk',fontWeight:700}}>⚡ Catalyst</span>
-        <span style={{color:'var(--text-muted)',fontSize:'13px'}}>Powered by Gemini 2.0 Flash</span>
+        <span className="grad-text" style={{ fontFamily: 'Space Grotesk', fontWeight: 700 }}>⚡ Catalyst</span>
+        <span style={{ color: 'var(--text-muted)', fontSize: '13px' }}>Powered by Gemini 2.0 Flash</span>
       </footer>
     </main>
   );

@@ -54,13 +54,24 @@ export default function ChatInterface({ parsedData, onComplete, onAiMessage }) {
     }
   }, []);
 
-  const toggleListening = () => {
+  const toggleListening = async () => {
     if (isListening) {
       recognitionRef.current?.stop();
       setIsListening(false);
     } else {
-      recognitionRef.current?.start();
-      setIsListening(true);
+      // Request mic permission explicitly first
+      try {
+        await navigator.mediaDevices.getUserMedia({ audio: true });
+      } catch (e) {
+        alert('Microphone access denied. Please allow microphone access in your browser settings and try again.');
+        return;
+      }
+      try {
+        recognitionRef.current?.start();
+        setIsListening(true);
+      } catch (e) {
+        console.warn('Speech recognition start error:', e.message);
+      }
     }
   };
 
