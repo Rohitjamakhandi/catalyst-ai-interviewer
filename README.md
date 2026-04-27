@@ -1,6 +1,6 @@
 # ⚡ Catalyst AI - Interactive Interviewer & Skill Analyzer
 
-Catalyst AI is a next-generation, full-stack web application designed to evaluate a candidate's actual proficiency in required job skills using **Maya, a real-time conversational AI interviewer**. 
+Catalyst AI is a next-generation, full-stack web application designed to evaluate a candidate's actual proficiency in required job skills using **Maya, a real-time conversational AI interviewer or assessment**. 
 
 Instead of simple text-based quizzes, candidates interact via voice or text with a fully animated, lip-syncing D-ID video avatar. After the assessment, Catalyst AI provides a comprehensive radar-chart gap analysis, an overall performance score, and generates a personalized week-by-week learning roadmap completely populated with curated YouTube tutorials.
 
