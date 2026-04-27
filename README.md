@@ -24,7 +24,7 @@ Instead of simple text-based quizzes, candidates interact via voice or text with
 *   **Runtime:** Node.js
 
 ### Artificial Intelligence & Integrations
-*   **AI Engine:** OpenRouter API (`meta-llama/llama-3.3-70b-instruct` or `google/gemini-2.0-flash-exp:free`)
+*   **AI Engine:** OpenRouter API (`meta-llama/llama-3.3-70b-instruct`)
 *   **Real-Time Avatar:** D-ID Streams API (WebRTC)
 *   **Speech Recognition:** Web Speech API (Browser native)
 
