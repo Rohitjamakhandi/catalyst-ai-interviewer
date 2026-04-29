@@ -14,7 +14,7 @@ Instead of simple text-based quizzes, candidates interact via voice or text with
 * **Comprehensive Gap Analysis:** Visualizes assessed skill levels vs. required skill levels using Recharts.
 * **Actionable Learning Roadmap:** Automatically curates a customized multi-week learning plan, complete with direct YouTube tutorial links to fill identified skill gaps.
 
-***NOTE:** Users must complete all skill assessments to move to the next stage in AI - Interactive Interviewer or Assessment & Skill Analyzer.
+***NOTE:** Users must complete all skill assessments to move to the next stage.
 
 ---
 
